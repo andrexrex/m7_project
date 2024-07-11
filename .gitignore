@@ -1,0 +1,3 @@
+vdjango/
+**/*__pycache__
+**/*migrations
