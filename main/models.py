@@ -14,9 +14,9 @@ class Region(models.Model):
     nombre = models.CharField(max_length=255)
 
 class Comuna(models.Model):
-    cod = models.CharField(max_length=2,primary_key=True)
+    cod = models.CharField(max_length=5,primary_key=True)
     nombre = models.CharField(max_length=255)
-    ragion = models.ForeignKey(Region,on_delete=models.CASCADE,related_name='comunas')
+    region = models.ForeignKey(Region,on_delete=models.CASCADE,related_name='comunas')
 
 class Inmueble(models.Model):
     tipos = (('casa','Casa'),('departamento','Departamento'))
