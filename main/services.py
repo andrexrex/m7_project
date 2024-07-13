@@ -1,13 +1,50 @@
 from django.contrib.auth.models import User
-from main.models import UserProfile
+from main.models import UserProfile, Inmueble, Comuna
 from django.db.utils import IntegrityError
 
-def crear_inmueble(*args):
-    pass
-def editar_inmueble(*args):
-    pass
+def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales, n_estacionamientos, n_habitaciones, n_banos, direccion, tipo_inmueble, precio, comuna_cod, propietario_rut):
+    comuna = Comuna.objects.get(cod=comuna_cod)
+    propietario = User.objects.get(username=propietario_rut)
+    Inmueble.objects.create(nombre=nombre, descripcion=descripcion, m2_construidos=m2_construidos, m2_totales=m2_totales, n_estacionamientos=n_estacionamientos, n_habitaciones=n_habitaciones, n_banos=n_banos, direccion=direccion, tipo_inmueble=tipo_inmueble, precio=precio, comuna_cod=comuna_cod, propietario_rut=propietario_rut)
+
+def editar_inmueble(inmueble_id, nombre=None, descripcion=None, m2_construidos=None, m2_totales=None,n_estacionamientos=None, n_habitaciones=None, n_banos=None, direccion=None, tipo_inmueble=None, precio=None,comuna_cod=None):
+    try:
+        inmueble = Inmueble.objects.get(id=inmueble_id)
+        if nombre is not None:
+            inmueble.nombre = nombre
+        if descripcion is not None:
+            inmueble.descripcion = descripcion
+        if m2_construidos is not None:
+            inmueble.m2_construidos = m2_construidos
+        if m2_totales is not None:
+            inmueble.m2_totales = m2_totales
+        if n_estacionamientos is not None:
+            inmueble.n_estacionamientos = n_estacionamientos
+        if n_habitaciones is not None:
+            inmueble.n_habitaciones = n_habitaciones
+        if n_banos is not None:
+            inmueble.n_banos = n_banos
+        if direccion is not None:
+            inmueble.direccion = direccion
+        if tipo_inmueble is not None:
+            inmueble.tipo_inmueble = tipo_inmueble
+        if precio is not None:
+            inmueble.precio = precio
+        if comuna_cod is not None:
+            comuna = Comuna.objects.get(cod=comuna_cod)
+            inmueble.comuna = comuna
+        inmueble.save()
+        return True
+    except Inmueble.DoesNotExist:
+        return False
+
 def eliminar_inmueble(inmueble_id):
-    pass
+    try:
+        inmueble = Inmueble.objects.get(id=inmueble_id)
+        inmueble.delete()
+        return True
+    except Inmueble.DoesNotExist:
+        return False
 
 def crear_user(username, first_name, last_name, email, password, pass_confirm, direccion, telefono=None) -> list[bool, str]:
     #VALIDAR PASSWORD
@@ -37,5 +74,9 @@ def editar_user(username, first_name, last_name, email, password, pass_confirm, 
     user_profile.save()
 
 def eliminar_user(user_id):
-    pass
-
+    try:
+        user = User.objects.get(id=user_id)
+        user.delete()
+        return True
+    except User.DoesNotExist:
+        return False

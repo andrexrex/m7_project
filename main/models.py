@@ -8,16 +8,25 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile', on_delete=models.CASCADE)
     direccion = models.CharField(max_length=255)
     telefono = models.CharField(max_length=255, null=True)
+    
+    def __str__(self) -> str:
+        return f'{self.user}'
 
 class Region(models.Model):
     cod = models.CharField(max_length=2,primary_key=True)
     nombre = models.CharField(max_length=255)
+    
+    def __str__(self) -> str:
+        return f'{self.nombre} ({self.cod})'
 
 class Comuna(models.Model):
     cod = models.CharField(max_length=5,primary_key=True)
     nombre = models.CharField(max_length=255)
     region = models.ForeignKey(Region,on_delete=models.CASCADE,related_name='comunas')
 
+    def __str__(self) -> str:
+        return f'{self.nombre} ({self.cod})'
+    
 class Inmueble(models.Model):
     tipos = (('casa','Casa'),('departamento','Departamento'))
     nombre = models.CharField(max_length=50)
@@ -30,10 +39,13 @@ class Inmueble(models.Model):
     direccion = models.CharField(max_length=255)
     tipo_inmueble = models.CharField(max_length=255, choices=tipos)
     precio = models.IntegerField(validators=[MinValueValidator(1000)], null=True)
-    precio = models.FloatField(validators=[MinValueValidator(1.0)], null=True)
+    precio_uf = models.FloatField(validators=[MinValueValidator(1.0)], null=True)
     #foreign keys
     comuna = models.ForeignKey(Comuna, related_name='inmuebles', on_delete=models.RESTRICT)
     propietario = models.ForeignKey(User, on_delete=models.RESTRICT, related_name='inmuebles')
+    
+    def __str__(self) -> str:
+        return f'{self.nombre}'
     
 class Solicitud(models.Model):
     estados = (('pendiente','Pendiente'),('rechazada','Rechazada'),('aprobada','Aprobada'))
