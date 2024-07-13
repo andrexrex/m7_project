@@ -5,7 +5,7 @@ from django.db.utils import IntegrityError
 def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales, n_estacionamientos, n_habitaciones, n_banos, direccion, tipo_inmueble, precio, comuna_cod, propietario_rut):
     comuna = Comuna.objects.get(cod=comuna_cod)
     propietario = User.objects.get(username=propietario_rut)
-    Inmueble.objects.create(nombre=nombre, descripcion=descripcion, m2_construidos=m2_construidos, m2_totales=m2_totales, n_estacionamientos=n_estacionamientos, n_habitaciones=n_habitaciones, n_banos=n_banos, direccion=direccion, tipo_inmueble=tipo_inmueble, precio=precio, comuna_cod=comuna_cod, propietario_rut=propietario_rut)
+    Inmueble.objects.create(nombre=nombre, descripcion=descripcion, m2_construidos=m2_construidos, m2_totales=m2_totales, n_estacionamientos=n_estacionamientos, n_habitaciones=n_habitaciones, n_banos=n_banos, direccion=direccion, tipo_inmueble=tipo_inmueble, precio=precio, comuna_cod=comuna, propietario_rut=propietario)
 
 def editar_inmueble(inmueble_id, nombre=None, descripcion=None, m2_construidos=None, m2_totales=None,n_estacionamientos=None, n_habitaciones=None, n_banos=None, direccion=None, tipo_inmueble=None, precio=None,comuna_cod=None):
     try:

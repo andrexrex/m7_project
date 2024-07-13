@@ -41,8 +41,8 @@ class Inmueble(models.Model):
     precio = models.IntegerField(validators=[MinValueValidator(1000)], null=True)
     precio_uf = models.FloatField(validators=[MinValueValidator(1.0)], null=True)
     #foreign keys
-    comuna = models.ForeignKey(Comuna, related_name='inmuebles', on_delete=models.RESTRICT)
-    propietario = models.ForeignKey(User, on_delete=models.RESTRICT, related_name='inmuebles')
+    comuna_cod = models.ForeignKey(Comuna, related_name='inmuebles', on_delete=models.RESTRICT)
+    propietario_rut = models.ForeignKey(User, on_delete=models.RESTRICT, related_name='inmuebles')
     
     def __str__(self) -> str:
         return f'{self.nombre}'
