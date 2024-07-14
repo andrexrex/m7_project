@@ -4,14 +4,16 @@ from main.services import *
 #python manage.pY test_client
 class Command(BaseCommand):
     def handle(self,*args,**kwargs):
-        #crear_user(
-        #    '1234567-8',
-        #    'Pedro',
-        #    'Picapiedras',
-        #    'picapiedra@gmail.com',
-        #    '12345',
-        #    '12345',
-        #    'Av. Roca 455'
-        #)
-        inmuebles = obtener_inmuebles_comuna()
+        '''
+        crear_user(
+            '1234567-8',
+            'Pedro',
+            'Picapiedras',
+            'picapiedra@gmail.com',
+            '12345',
+            '12345',
+            'Av. Roca 455'
+        )
+        '''
+        inmuebles = obtener_inmuebles_comunas()
         import pdb; pdb.set_trace()

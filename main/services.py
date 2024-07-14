@@ -7,9 +7,9 @@ from django.db import connection
 def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales, n_estacionamientos, n_habitaciones, n_banos, direccion, tipo_inmueble, precio, comuna_cod, propietario_rut):
     comuna = Comuna.objects.get(cod=comuna_cod)
     propietario = User.objects.get(username=propietario_rut)
-    Inmueble.objects.create(nombre=nombre, descripcion=descripcion, m2_construidos=m2_construidos, m2_totales=m2_totales, n_estacionamientos=n_estacionamientos, n_habitaciones=n_habitaciones, n_banos=n_banos, direccion=direccion, tipo_inmueble=tipo_inmueble, precio=precio, comuna_cod=comuna, propietario_rut=propietario)
+    Inmueble.objects.create(nombre=nombre, descripcion=descripcion, m2_construidos=m2_construidos, m2_totales=m2_totales, n_estacionamientos=n_estacionamientos, n_habitaciones=n_habitaciones, n_banos=n_banos, direccion=direccion, tipo_inmueble=tipo_inmueble, precio=precio, comuna=comuna, propietario=propietario)
 
-def editar_inmueble(inmueble_id, nombre=None, descripcion=None, m2_construidos=None, m2_totales=None,n_estacionamientos=None, n_habitaciones=None, n_banos=None, direccion=None, tipo_inmueble=None, precio=None,comuna_cod=None):
+def editar_inmueble(inmueble_id, nombre=None, descripcion=None, m2_construidos=None, m2_totales=None,n_estacionamientos=None, n_habitaciones=None, n_banos=None, direccion=None, tipo_inmueble=None, precio=None,comuna=None):
     try:
         inmueble = Inmueble.objects.get(id=inmueble_id)
         if nombre is not None:
@@ -32,8 +32,8 @@ def editar_inmueble(inmueble_id, nombre=None, descripcion=None, m2_construidos=N
             inmueble.tipo_inmueble = tipo_inmueble
         if precio is not None:
             inmueble.precio = precio
-        if comuna_cod is not None:
-            comuna = Comuna.objects.get(cod=comuna_cod)
+        if comuna is not None:
+            comuna = Comuna.objects.get(cod=comuna)
             inmueble.comuna = comuna
         inmueble.save()
         return True
@@ -85,5 +85,34 @@ def eliminar_user(user_id):
     
 def obtener_inmuebles_comunas(filtro):
     if filtro is None:
-        return Inmueble.objects.all().order_by('comuna_cod')
-    return Inmueble.objects.filter(Q(nombre__icontains=filtro) | Q(descripcion__icontains=filtro)).order_by('comuna_cod')
+        return Inmueble.objects.all().order_by('comuna')
+    return Inmueble.objects.filter(Q(nombre__icontains=filtro) | Q(descripcion__icontains=filtro)).order_by('comuna')
+
+#FORMA DJANGO
+def obtener_inmuebles_region(filtro):
+    inmuebles = Inmueble.objects.select_related('comuna__region').order_by('comuna__region__cod')
+    if filtro:
+        inmuebles = inmuebles.filter(Q(nombre__icontains=filtro) | Q(descripcion__icontains=filtro))
+    return inmuebles
+
+#FORMA SQL QUERY
+"""
+def obtener_inmuebles_region(filtro):
+    query = '''
+    select I.nombre, I.descripcion, R.nombre as region from main_inmueble as I
+    join main_comuna as C on I.comuna_id = C.cod
+    join main_region as R on C.region_id = R.cod
+    '''
+    if filtro:
+        query += '''
+        where I.nombre LIKE %s OR I.descripcion LIKE %s
+        '''
+        params = [f'%{filtro}%', f'%{filtro}%']
+    else:
+        params = []
+    query += 'order by R.cod;'
+    with connection.cursor() as cursor:
+        cursor.execute(query, params)
+        registros = cursor.fetchall()
+    return registros
+"""

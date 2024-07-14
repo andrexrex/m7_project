@@ -41,15 +41,14 @@ class Inmueble(models.Model):
     precio = models.IntegerField(validators=[MinValueValidator(1000)], null=True)
     precio_uf = models.FloatField(validators=[MinValueValidator(1.0)], null=True)
     #foreign keys
-    comuna_cod = models.ForeignKey(Comuna, related_name='inmuebles', on_delete=models.RESTRICT)
-    propietario_rut = models.ForeignKey(User, on_delete=models.RESTRICT, related_name='inmuebles')
+    comuna = models.ForeignKey(Comuna, related_name='inmuebles', on_delete=models.RESTRICT)
+    propietario = models.ForeignKey(User, on_delete=models.RESTRICT, related_name='inmuebles')
     
     def __str__(self) -> str:
         return f'{self.nombre}'
     
 class Solicitud(models.Model):
     estados = (('pendiente','Pendiente'),('rechazada','Rechazada'),('aprobada','Aprobada'))
-    
     inmueble = models.ForeignKey(Inmueble, on_delete=models.CASCADE, related_name='solicitudes')
     arrendador = models.ForeignKey(User, related_name='solicitudes', on_delete=models.CASCADE)
     fecha = models.DateTimeField(auto_now_add=True)
