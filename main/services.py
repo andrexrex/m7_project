@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from main.models import UserProfile, Inmueble, Comuna
 from django.db.utils import IntegrityError
+from django.db.models import Q
+from django.db import connection
 
 def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales, n_estacionamientos, n_habitaciones, n_banos, direccion, tipo_inmueble, precio, comuna_cod, propietario_rut):
     comuna = Comuna.objects.get(cod=comuna_cod)
@@ -80,3 +82,8 @@ def eliminar_user(user_id):
         return True
     except User.DoesNotExist:
         return False
+    
+def obtener_inmuebles_comunas(filtro):
+    if filtro is None:
+        return Inmueble.objects.all().order_by('comuna_cod')
+    return Inmueble.objects.filter(Q(nombre__icontains=filtro) | Q(descripcion__icontains=filtro)).order_by('comuna_cod')
