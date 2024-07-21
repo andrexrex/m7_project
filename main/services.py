@@ -116,3 +116,16 @@ def obtener_inmuebles_region(filtro):
         registros = cursor.fetchall()
     return registros
 """
+def editar_user_sin_password(username, first_name, last_name, email, direccion, rol, telefono=None) -> list[bool, str]:
+    # 1. Nos traemos el 'user' y modificamos sus datos
+    user = User.objects.get(username=username)
+    user.first_name = first_name
+    user.last_name = last_name
+    user.email = email
+    user.save()
+    # 2. Nos traemos el 'user_profile' y modificamos sus datos
+    user_profile = UserProfile.objects.get(user=user)
+    user_profile.direccion = direccion
+    user_profile.telefono = telefono
+    user_profile.rol = rol
+    user_profile.save()

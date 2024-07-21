@@ -1,0 +1,152 @@
+/* BODY */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+body {
+    font-family: "Poppins", sans-serif;
+    color: #939393;
+    background-image: url('../pattern1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* NAVBAR */
+.navbar{
+    background-color: #a6caec !important;
+    font-family: "Poppins", sans-serif;
+}
+
+.navbar-custom {
+    font-size: 16px !important; 
+    color: #ffffff; 
+}
+
+/* LOGO */
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 200px;
+}
+
+img{
+    width: 200px;
+    height: auto;
+}
+
+/* PRODUCTOS */
+.section-products {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.section-products .header {
+    margin-bottom: 50px;
+}
+
+.section-products .header h3 {
+    font-size: 1rem;
+    color: #fe302f;
+    font-weight: 500;
+}
+
+.section-products .header h2 {
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: #444444;
+}
+
+.product-card {
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    text-align: center;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+.product-card .card-img-top {
+    transition: opacity 0.3s ease;
+}
+
+.product-card:hover .card-img-top {
+    opacity: 0.8;
+}
+
+.product-card .card-body {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: 1;
+}
+
+.product-card .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.product-card .card-text {
+    font-size: 1rem;
+    color: #555;
+    flex: 1;
+}
+
+.product-card .product-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: auto;
+}
+
+.product-card .btn-primary {
+    background-color: #4ab24c;
+    border-color: #4ab24c;
+}
+
+.product-card .btn-primary:hover {
+    background-color: #008734;
+    border-color: #008734;
+}
+
+.btn-secondary {
+    background-color: #5700a3;
+    border-color: #5700a3;
+}
+
+.btn-secondary:hover {
+    background-color: #ac6be6;
+    border-color: #ac6be6;
+}
+
+.btn-primary {
+    background-color: #4f95da;
+    border-color: #4f95da;
+}
+
+.btn-primary:hover {
+    background-color: #46b0e0;
+    border-color: #46b0e0;
+}
+
+
+.card-body .mt-auto {
+    margin-top: auto;
+}
+
+.row.justify-content-center {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 576px) {
+    .product-card {
+        margin: 0 auto;
+        float: none;
+    }
+}

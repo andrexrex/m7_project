@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-3">
+        <h3 class="text-center">Cambia tu contraseña</h3>
+        <form action="/accounts/change-pass/" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    id="password"
+                    placeholder="*****"
+                    required />
+            </div>
+            <div class="mb-3">
+                <label for="pass_repeat" class="form-label">Repita
+                    Contraseña</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    name="pass_repeat"
+                    id="pass_repeat"
+                    placeholder="*****"
+                    required />
+            </div>
+            <input type="submit" value="Cambiar" class="btn btn-danger">
+        </form>
+    </div>
+    <div class="col-5">
+        <h3 class="text-center">Editar datos personales</h3>
+        <form action="/edit-user/" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    id="email"
+                    placeholder="abc@mail.com"
+                    value="{{ user.email }}"
+                    required />
+            </div>
+            <div class="mb-3">
+                <label for class="form-label">Nombre</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="first_name"
+                    id="first_name"
+                    placeholder="tu nombre"
+                    value="{{user.first_name}}"
+                    required />
+            </div>
+            <div class="mb-3">
+                <label for class="form-label">Apellido</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="last_name"
+                    id="last_name"
+                    placeholder="tu apellido"
+                    value="{{user.last_name}}"
+                    required />
+            </div>
+            <div class="mb-3">
+                <label for class="form-label">Dirección</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="direccion"
+                    id="direccion"
+                    placeholder="tu dirección"
+                    value="{{user.user_profile.direccion}}"
+                    required />
+            </div>
+            <div class="mb-3">
+                <label for class="form-label">Teléfono</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="telefono"
+                    id="telefono"
+                    placeholder="tu teléfono"
+                    value="{% if user.user_profile.telefono %}{{user.user_profile.telefono}}{% endif %}" />
+            </div>
+
+            <input type="submit" value="Enviar" class="btn btn-outline-success">
+        </form>
+    </div>
+    <div class="col-4">
+        <h3 class="text-center">Tus propiedades</h3>
+    </div>
+</div>
+{% endblock %}
