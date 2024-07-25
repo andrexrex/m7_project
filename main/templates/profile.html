@@ -88,12 +88,97 @@
                     placeholder="tu teléfono"
                     value="{% if user.user_profile.telefono %}{{user.user_profile.telefono}}{% endif %}" />
             </div>
+            <div class="mb-3">
+                <!-- <b>{{user.user_profile.rol}}</b> -->
+                <div class="form-check form-check-inline">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="rol"
+                        id="arrendador"
+                        value="arrendador"
+                        required
+                        {% if user.user_profile.rol == 'arrendador' %}
+                        checked
+                        {% endif %} />
+                    <label class="form-check-label" for>Arrendador</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="rol"
+                        id="arrendatario"
+                        value="arrendatario"
+                        required
+                        {% if user.user_profile.rol == 'arrendatario'%}
+                        checked
+                        {% endif %} />
+                    <label class="form-check-label" for>Arrendatario</label>
+                </div>
+
+            </div>
+
+            <select name="rol2" id="rol2">
+                <option value>Elija su ROL</option>
+                {% for rol in user.user_profile.roles %}
+                <option {% if rol.0 == user.user_profile.rol %}selected{% endif %} value="{{rol.0}}">{{rol.1}}</option>
+                {% endfor %}
+            </select>
 
             <input type="submit" value="Enviar" class="btn btn-outline-success">
         </form>
     </div>
     <div class="col-4">
-        <h3 class="text-center">Tus propiedades</h3>
+        <h3 class="text-center">
+            {% if user.user_profile.rol == 'arrendador' %}
+            Tus Propiedades
+            {% elif user.user_profile.rol == 'arrendatario' %}
+            Propiedades Solicitadas
+            {% else %}
+            TODAS
+            {% endif %}
+        </h3>
+        <ul class="list-group">
+            {% for inmueble in mis_inmuebles %}
+            <li class="list-group-item">
+                <h5>{{ inmueble.nombre }}</h5>
+                <div class="d-flex justify-content-between">
+                    <span>${{ inmueble.precio }} por mes</span>
+                    <a href="{% url 'editar_inmueble' id=inmueble.id %}"
+                        class="p-1">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
+                    <a
+                        href="#"
+                        class="p-1 text-danger"
+                        onclick="eliminar(event)">
+                        <i class="bi bi-trash-fill" id="{{inmueble.id}}"></i>
+                    </a>
+                </div>
+            </li>
+            {% empty %}
+            <li class="list-group-item">Sin propiedades aún</li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
+{% endblock %}
+
+{% block js %}
+<script>
+    function eliminar(event) {
+        // 1. Evitamos que enlace me dirija a otro lado
+        event.preventDefault()
+        // 2. Recuperamos el ID del icono clickeado
+        const id = event.target.id
+        const url = '/inmuebles/eliminar/' + id + '/'
+        // 3. Confirmamos si usuario desea eliminar
+        const confirmacion = confirm('¿estás seguro?')
+        if (confirmacion == true) {
+            // 4. redirijo la página a la URL construída
+            window.location.href = url
+        }
+    }
+</script>
 {% endblock %}

@@ -13,6 +13,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'profile' %}">Mis Datos</a>
                 </li>
+                {% if user.user_profile.rol == 'arrendador' or user.is_staff %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'nuevo_inmueble' %}">Agregar Inmueble</a>
+                </li>
+                {% endif %}
             </ul>
             <div class="d-flex align-items-center ms-auto">
                 <form class="d-flex me-3">

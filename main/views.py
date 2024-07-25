@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
+from main.models import Comuna, Inmueble, Region
 from main.forms import RegisterUserForm
 from main.services import editar_user_sin_password
 
@@ -26,11 +27,42 @@ def root(request):
 
 @login_required
 def home(request):
-    return render(request, 'home.html')
+    datos = request.GET
+    region_cod = datos.get('region_cod','')
+    comuna_cod = datos.get('comuna_cod','')
+    palabra = datos.get('palabra','')
+    regiones = Region.objects.all()
+    comunas = Comuna.objects.all()
+    inmuebles = filtrar_inmuebles(region_cod,comuna_cod,palabra)
+    context = {
+        'regiones': regiones,
+        'comunas': comunas,
+        'inmuebles': inmuebles,
+    }
+    return render(request,'home.html',context)
+
+def filtrar_inmuebles(region_cod,comuna_cod,palabra):
+    #Caso 1: comuna_cod != ''
+    #Caso 2: comuna_cod == '' and region_cod != ''
+    #Caso 3: comuna_cod == '' and region_cod == ''
+    if comuna_cod != '':
+        comuna =Comuna.objects.get(cod=comuna_cod)
+        return Inmueble.objects.filter(comuna=comuna)
+    inmuebles = Inmueble.objects.all()
+    return inmuebles
 
 @login_required
 def profile(req):
-    return render(req, 'profile.html')
+    user = req.user
+    mis_inmuebles = None
+    if user.user_profile.rol == 'arrendador':
+        mis_inmuebles = user.inmuebles.all()
+    elif user.user_profile.rol == 'arrendatario':
+        pass
+    context = {
+        'mis_inmuebles': mis_inmuebles
+    }
+    return render(req, 'profile.html', context)
 
 @login_required
 def edit_user(req):
@@ -45,6 +77,7 @@ def edit_user(req):
             req.POST['last_name'],
             req.POST['email'],
             req.POST['direccion'],
+            req.POST['rol'],
             req.POST['telefono'])
     else:
         editar_user_sin_password(
@@ -52,7 +85,8 @@ def edit_user(req):
             req.POST['first_name'],
             req.POST['last_name'],
             req.POST['email'],
-            req.POST['direccion'])
+            req.POST['direccion'],
+            req.POST['rol'])
     messages.success(req, "Ha actualizado sus datos con éxito")
     return redirect('/')
 

@@ -26,4 +26,5 @@ urlpatterns = [
     path('accounts/change-pass/', change_password, name='change_password'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', include('main.urls')),
+    path('inmuebles/', include('inmuebles.urls')),
 ]

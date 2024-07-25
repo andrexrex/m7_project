@@ -5,12 +5,14 @@ from django.core.validators import MinValueValidator
 
 class UserProfile(models.Model):
     # username(rut), email, first_name, last_name, password
+    roles = (('arrendador','Arrendador'),('arrendatario','Arrendatario'),('admin','Admin'))
     user = models.OneToOneField(User, related_name='user_profile', on_delete=models.CASCADE)
     direccion = models.CharField(max_length=255)
-    telefono = models.CharField(max_length=255, null=True)
+    telefono = models.CharField(max_length=255, null=True, blank=True)
+    rol = models.CharField(max_length=255, choices=roles, default='arrendatario')
     
     def __str__(self) -> str:
-        return f'{self.user}'
+        return f'{self.user.first_name} {self.user.last_name} ({self.rol}))'
 
 class Region(models.Model):
     cod = models.CharField(max_length=2,primary_key=True)
