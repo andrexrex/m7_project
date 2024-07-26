@@ -41,6 +41,10 @@ class Inmueble(models.Model):
     direccion = models.CharField(max_length=255)
     tipo_inmueble = models.CharField(max_length=255, choices=tipos)
     precio = models.IntegerField(validators=[MinValueValidator(1000)], null=True)
+    img1 = models.URLField(blank=True, null=True)
+    img2 = models.URLField(blank=True, null=True)
+    img3 = models.URLField(blank=True, null=True)
+    img4 = models.URLField(blank=True, null=True)
     precio_uf = models.FloatField(validators=[MinValueValidator(1.0)], null=True)
     #foreign keys
     comuna = models.ForeignKey(Comuna, related_name='inmuebles', on_delete=models.RESTRICT)

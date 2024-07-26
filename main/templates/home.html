@@ -1,79 +1,235 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row">
-    <div class="col-4">
-        <h3>Filtra las propiedades</h3>
-        <form action="/" method="get">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="region_cod" class="form-label">Región</label>
-                <select name="region_cod" id="region_cod" class="form-select">
-                    <option value>Selecciona una región</option>
-                    {% for region in regiones %}
-                        <option value="{{region.cod}}">{{region.nombre}}</option>
-                    {% endfor %}
-                </select>
+<div>
+    <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://media.admagazine.fr/photos/60f6a936466d4903602cc2a7/master/w_1600,c_limit/1.jpeg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h4>Propiedades en medio de la naturaleza</h4>
+                </div>
+                <div class="carousel-gradient"></div>
             </div>
-            <div class="mb-3">
-                <label for="comuna" class="form-label">Comuna</label>
-                <select class="form-select" name="comuna_cod" id="comuna_cod">
-                    <option value>Selecciona una Comuna</option>
-                    {% for comuna in comunas %}
-                        <option value="{{ comuna.cod }}">{{ comuna.nombre }}</option>
-                    {% endfor %}
-                </select>
+            <div class="carousel-item">
+                <img src="https://content.api.news/v3/images/bin/8619f770128445b6c65e7a66a109b499" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h4>Propiedades en el centro de la ciudad</h4>
+                </div>
+                <div class="carousel-gradient"></div>
             </div>
-            <div class="mb-3">
-                <label for="palabra" class="form-label">Palabra</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    name="palabra"
-                    id="palabra" />
+            <div class="carousel-item">
+                <img src="https://media.admagazine.fr/photos/60f6a936fd8721737d29af7e/master/w_1600,c_limit/6.jpeg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h4>Propiedades de alto valor</h4>
+                </div>
+                <div class="carousel-gradient"></div>
             </div>
-            <input type="submit" value="Buscar" class="btn btn-success">
-        </form>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
 
-    <div class="col-8">
-        <h3>Propiedades</h3>
-        {% for inmueble in inmuebles %}
-        <div class="card mt-3">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-8">
-                        <h5 class="card-title">{{ inmueble.nombre }}</h5>
-                        <p class="card-text">{{ inmueble.descripcion }}</p>
+    <!-- Filters Row -->
+    <div class="container mt-5">
+        <div class="row mb-4 justify-content-center">
+            <div class="col-md-12">
+                <div class="filter-header">
+                    <h3>Filtar propiedades</h3>
+                </div>
+                <form action="{% url 'home' %}" method="get">
+                    <div class="row">
+                        <!-- Región -->
+                        <div class="col-md-3 mb-3">
+                            <label for="region_cod" class="form-label">Región</label>
+                            <select name="region_cod" id="region_cod" class="form-select">
+                                <option value>Selecciona una región</option>
+                                {% for region in regiones %}
+                                <option value="{{ region.cod }}">{{ region.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Comuna -->
+                        <div class="col-md-3 mb-3">
+                            <label for="comuna" class="form-label">Comuna</label>
+                            <select class="form-select" name="comuna_cod" id="comuna_cod">
+                                <option value>Selecciona una Comuna</option>
+                                {% for comuna in comunas %}
+                                <option value="{{ comuna.cod }}">{{ comuna.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!-- Palabra -->
+                        <div class="col-md-3 mb-3">
+                            <label for="palabra" class="form-label">Palabra</label>
+                            <input type="text" class="form-control" name="palabra" id="palabra" />
+                        </div>
+                        <!-- Submit Button -->
+                        <div class="col-md-3 mb-3 d-flex align-items-end">
+                            <input type="submit" value="Buscar" class="btn btn-success w-100">
+                        </div>
                     </div>
-                    <div class="col-4">
-                        <a href="#" class="btn btn-primary">Ver detalle</a>
-                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Properties Cards Row -->
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="header mb-3 text-center">
+                    <h2 class="fs-1">Propiedades</h2>
                 </div>
             </div>
         </div>
-        {% endfor %}
+        <div class="row justify-content-center">
+            {% for inmueble in inmuebles %}
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4">
+                <div id="inmueble-{{ inmueble.id }}" class="card product-card">
+                    <div class="card-img-container">
+                        <img class="card-img" src="{{ inmueble.img1 }}" alt="Card image cap" onmouseover="switchImage(this, '{{ inmueble.img2 }}')" onmouseout="switchImage(this, '{{ inmueble.img1 }}')">
+                        <div class="card-body-overlay">
+                            <h5 class="card-title">{{ inmueble.nombre }}</h5>
+                            <p class="card-text">{{ inmueble.descripcion }}</p>
+                            <h4 class="product-price">${{ inmueble.precio }}</h4>
+                            <a href="#" class="btn btn-primary">Ver detalle</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}
+
 {% block js %}
 <script>
-    function filtrar_comunas () {
-    // recuperamos el valor seleccionado de la Region
-    const cod_seleccionado = $(this).val()
-    console.log(cod_seleccionado)
-    // ahora iteramos sobre todas las comunas, y mostramos sólo aquellas cuyo código tenga como prefijo el código de la región seleccionada
-    $('#comuna_cod option').each(function() {
-        const comuna = $(this)
-        const cod_comuna = comuna.val()
-        if (cod_seleccionado == cod_comuna.substring(0, 2)) {
-        // la comuna es parte de la region
-        comuna.show()
-        } else {
-        comuna.hide()
-        }
-    })
+    function switchImage(element, newImage) {
+        element.src = newImage;
     }
-    $('#region_cod').on('change', filtrar_comunas)
+
+    function filtrar_comunas() {
+        const cod_seleccionado = $(this).val();
+        $('#comuna_cod option').each(function() {
+            const comuna = $(this);
+            const cod_comuna = comuna.val();
+            if (cod_seleccionado === cod_comuna.substring(0, 2)) {
+                comuna.show();
+            } else {
+                comuna.hide();
+            }
+        });
+    }
+    $('#region_cod').on('change', filtrar_comunas);
 </script>
 {% endblock %}
+
+{% block css %}
+<style>
+.carousel {
+    width: 100%;
+    margin: 0;
+}
+
+.carousel-item {
+    position: relative;
+    width: 100%;
+    height: 30rem; /* Adjust height as needed */
+    overflow: hidden;
+}
+
+.carousel-item img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-height: 100%;
+    min-width: 100%;
+    transform: translate(-50%, -50%);
+}
+
+.carousel-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+}
+
+.carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    text-align: center;
+    z-index: 10; /* Ensure captions are above the gradient */
+}
+
+.card-img-container {
+    position: relative;
+    width: 100%;
+    height: 25rem; /* Fixed height for the image */
+    border-radius: 8px;
+    overflow: hidden; /* Ensure no overflow */
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the entire area */
+    transition: opacity 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.product-card {
+    border: none; /* Remove border */
+    border-radius: 8px;
+    overflow: hidden; /* Ensure no overflow */
+    position: relative; /* Needed for overlay positioning */
+    height: 25rem; /* Fixed height for the card */
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background for contrast */
+    color: white !important; /* Ensure text color is white */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align content horizontally */
+    text-align: center; /* Center align text */
+}
+
+.card-body-overlay h5, 
+.card-body-overlay p, 
+.card-body-overlay h4 {
+    color: white !important; /* Force text color to be white */
+    margin: 0; /* Remove default margins */
+}
+
+.card-body-overlay .btn-primary {
+    color: #fff !important; /* Button text color */
+    background-color: #007bff !important; /* Button background color */
+    border-color: #007bff !important; /* Button border color */
+    margin-top: 1rem; /* Add spacing above the button */
+    width: 100%; /* Make button full width */
+    border-radius: 8px; /* Rounded corners for the button */
+}
+
+.card-body-overlay .btn-primary:hover {
+    background-color: #0056b3 !important; /* Darker button background on hover */
+}
+
+</style>
+{% endblock %}
+

@@ -3,8 +3,8 @@
 
 body {
     font-family: "Poppins", sans-serif;
-    color: #939393;
-    background-image: url('../pattern1.jpg');
+    color: #878787;
+    font-size: 20px !important; 
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -12,13 +12,22 @@ body {
 
 /* NAVBAR */
 .navbar{
-    background-color: #a6caec !important;
+    background-color: #e1e1e1 !important;
     font-family: "Poppins", sans-serif;
+    padding-left: 3.5rem;
 }
 
 .navbar-custom {
     font-size: 16px !important; 
     color: #ffffff; 
+}
+
+.nav-item {
+    font-family: "Poppins", sans-serif;
+    color: #555555 !important;
+    font-size: 25px !important; 
+    font-weight: bold;
+    margin: 0 1rem;
 }
 
 /* LOGO */
@@ -27,6 +36,7 @@ body {
     justify-content: center;
     align-items: center; 
     height: 200px;
+
 }
 
 img{
@@ -53,7 +63,7 @@ img{
 .section-products .header h2 {
     font-size: 2.2rem;
     font-weight: 400;
-    color: #444444;
+    color: #ffffff;
 }
 
 .product-card {
@@ -86,20 +96,21 @@ img{
 }
 
 .product-card .card-title {
-    font-size: 1.2rem;
+    font-size: 2rem;
     margin-bottom: 10px;
+    font-weight: bold;
 }
 
 .product-card .card-text {
     font-size: 1rem;
-    color: #555;
+    color: #ffffff;
     flex: 1;
 }
 
 .product-card .product-price {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #333;
+    color: #ffffff;
     margin-top: auto;
 }
 

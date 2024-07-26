@@ -8,47 +8,60 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib import messages
 from main.models import Comuna, Inmueble, Region
 from main.forms import RegisterUserForm
+from django.db.models import Q
 from main.services import editar_user_sin_password
 
 class CustomLoginView(SuccessMessageMixin, LoginView):
     success_message = "Sesion Iniciada Exitosamente"
     template_name = 'registration/login.html'  
     redirect_authenticated_user = True
-    
+
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('home')
+
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
+        
+        # Clear messages
+        storage = messages.get_messages(request)
+        list(storage)  # Consume the generator to clear the messages
+        
+        # Add a single message
         messages.add_message(request, messages.WARNING, "Sesion Cerrada Exitosamente")
+        
         return response
-
+    
 def root(request):
     return redirect('/home')
 
 @login_required
 def home(request):
     datos = request.GET
-    region_cod = datos.get('region_cod','')
-    comuna_cod = datos.get('comuna_cod','')
-    palabra = datos.get('palabra','')
+    region_cod = datos.get('region_cod', '')
+    comuna_cod = datos.get('comuna_cod', '')
+    palabra = datos.get('palabra', '')
+
     regiones = Region.objects.all()
     comunas = Comuna.objects.all()
-    inmuebles = filtrar_inmuebles(region_cod,comuna_cod,palabra)
+    inmuebles = filtrar_inmuebles(region_cod, comuna_cod, palabra)
+
     context = {
         'regiones': regiones,
         'comunas': comunas,
         'inmuebles': inmuebles,
     }
-    return render(request,'home.html',context)
+    return render(request, 'home.html', context)
 
-def filtrar_inmuebles(region_cod,comuna_cod,palabra):
-    #Caso 1: comuna_cod != ''
-    #Caso 2: comuna_cod == '' and region_cod != ''
-    #Caso 3: comuna_cod == '' and region_cod == ''
-    if comuna_cod != '':
-        comuna =Comuna.objects.get(cod=comuna_cod)
-        return Inmueble.objects.filter(comuna=comuna)
+def filtrar_inmuebles(region_cod, comuna_cod, palabra):
     inmuebles = Inmueble.objects.all()
+    if comuna_cod:
+        inmuebles = inmuebles.filter(comuna__cod=comuna_cod)
+    elif region_cod:
+        inmuebles = inmuebles.filter(comuna__region__cod=region_cod)
+    if palabra:
+        inmuebles = inmuebles.filter(
+            Q(nombre__icontains=palabra) | Q(descripcion__icontains=palabra)
+        )
     return inmuebles
 
 @login_required

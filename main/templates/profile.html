@@ -1,166 +1,91 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row">
-    <div class="col-3">
-        <h3 class="text-center">Cambia tu contraseña</h3>
-        <form action="/accounts/change-pass/" method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="password" class="form-label">Contraseña</label>
-                <input
-                    type="password"
-                    class="form-control"
-                    name="password"
-                    id="password"
-                    placeholder="*****"
-                    required />
-            </div>
-            <div class="mb-3">
-                <label for="pass_repeat" class="form-label">Repita
-                    Contraseña</label>
-                <input
-                    type="password"
-                    class="form-control"
-                    name="pass_repeat"
-                    id="pass_repeat"
-                    placeholder="*****"
-                    required />
-            </div>
-            <input type="submit" value="Cambiar" class="btn btn-danger">
-        </form>
-    </div>
-    <div class="col-5">
-        <h3 class="text-center">Editar datos personales</h3>
-        <form action="/edit-user/" method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input
-                    type="email"
-                    class="form-control"
-                    name="email"
-                    id="email"
-                    placeholder="abc@mail.com"
-                    value="{{ user.email }}"
-                    required />
-            </div>
-            <div class="mb-3">
-                <label for class="form-label">Nombre</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    name="first_name"
-                    id="first_name"
-                    placeholder="tu nombre"
-                    value="{{user.first_name}}"
-                    required />
-            </div>
-            <div class="mb-3">
-                <label for class="form-label">Apellido</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    name="last_name"
-                    id="last_name"
-                    placeholder="tu apellido"
-                    value="{{user.last_name}}"
-                    required />
-            </div>
-            <div class="mb-3">
-                <label for class="form-label">Dirección</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    name="direccion"
-                    id="direccion"
-                    placeholder="tu dirección"
-                    value="{{user.user_profile.direccion}}"
-                    required />
-            </div>
-            <div class="mb-3">
-                <label for class="form-label">Teléfono</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    name="telefono"
-                    id="telefono"
-                    placeholder="tu teléfono"
-                    value="{% if user.user_profile.telefono %}{{user.user_profile.telefono}}{% endif %}" />
-            </div>
-            <div class="mb-3">
-                <!-- <b>{{user.user_profile.rol}}</b> -->
-                <div class="form-check form-check-inline">
-                    <input
-                        class="form-check-input"
-                        type="radio"
-                        name="rol"
-                        id="arrendador"
-                        value="arrendador"
-                        required
-                        {% if user.user_profile.rol == 'arrendador' %}
-                        checked
-                        {% endif %} />
-                    <label class="form-check-label" for>Arrendador</label>
+<div class="container mt-5">
+    <div class="row g-5"> <!-- Add g-4 class here for gutter spacing -->
+        <div class="col-12 col-md-3 mb-4">
+            <h3 class="text-center mb-4">Editar contraseña</h3>
+            <form action="/accounts/change-pass/" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="*****" required />
                 </div>
-                <div class="form-check form-check-inline">
-                    <input
-                        class="form-check-input"
-                        type="radio"
-                        name="rol"
-                        id="arrendatario"
-                        value="arrendatario"
-                        required
-                        {% if user.user_profile.rol == 'arrendatario'%}
-                        checked
-                        {% endif %} />
-                    <label class="form-check-label" for>Arrendatario</label>
+                <div class="mb-3">
+                    <label for="pass_repeat" class="form-label">Repita Contraseña</label>
+                    <input type="password" class="form-control" name="pass_repeat" id="pass_repeat" placeholder="*****" required />
                 </div>
-
-            </div>
-
-            <select name="rol2" id="rol2">
-                <option value>Elija su ROL</option>
-                {% for rol in user.user_profile.roles %}
-                <option {% if rol.0 == user.user_profile.rol %}selected{% endif %} value="{{rol.0}}">{{rol.1}}</option>
+                <input type="submit" value="Cambiar" class="btn btn-danger w-100">
+            </form>
+        </div>
+        <div class="col-12 col-md-5 mb-4">
+            <h3 class="text-center mb-4">Editar datos personales</h3>
+            <form action="/edit-user/" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="abc@mail.com" value="{{ user.email }}" required />
+                </div>
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="tu nombre" value="{{ user.first_name }}" required />
+                </div>
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="tu apellido" value="{{ user.last_name }}" required />
+                </div>
+                <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" name="direccion" id="direccion" placeholder="tu dirección" value="{{ user.user_profile.direccion }}" required />
+                </div>
+                <div class="mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" name="telefono" id="telefono" placeholder="tu teléfono" value="{% if user.user_profile.telefono %}{{ user.user_profile.telefono }}{% endif %}" />
+                </div>
+                <div class="mb-3">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="rol" id="arrendador" value="arrendador" required {% if user.user_profile.rol == 'arrendador' %} checked {% endif %} />
+                        <label class="form-check-label" for="arrendador">Arrendador</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="rol" id="arrendatario" value="arrendatario" required {% if user.user_profile.rol == 'arrendatario' %} checked {% endif %} />
+                        <label class="form-check-label" for="arrendatario">Arrendatario</label>
+                    </div>
+                </div>
+                <input type="submit" value="Enviar" class="btn btn-outline-success w-100">
+            </form>
+        </div>
+        <div class="col-12 col-md-4 mb-4">
+            <h3 class="text-center mb-5">
+                {% if user.user_profile.rol == 'arrendador' %}
+                Tus Propiedades
+                {% elif user.user_profile.rol == 'arrendatario' %}
+                Propiedades Solicitadas
+                {% else %}
+                TODAS
+                {% endif %}
+            </h3>
+            <ul class="list-group">
+                {% for inmueble in mis_inmuebles %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5>{{ inmueble.nombre }}</h5>
+                        <span>${{ inmueble.precio }} por mes</span>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <a href="{% url 'editar_inmueble' id=inmueble.id %}" class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+                        <a href="#" class="btn btn-sm btn-outline-danger" onclick="eliminar(event)">
+                            <i class="bi bi-trash-fill" id="{{ inmueble.id }}"></i>
+                        </a>
+                    </div>
+                </li>
+                {% empty %}
+                <li class="list-group-item">Sin propiedades aún</li>
                 {% endfor %}
-            </select>
-
-            <input type="submit" value="Enviar" class="btn btn-outline-success">
-        </form>
-    </div>
-    <div class="col-4">
-        <h3 class="text-center">
-            {% if user.user_profile.rol == 'arrendador' %}
-            Tus Propiedades
-            {% elif user.user_profile.rol == 'arrendatario' %}
-            Propiedades Solicitadas
-            {% else %}
-            TODAS
-            {% endif %}
-        </h3>
-        <ul class="list-group">
-            {% for inmueble in mis_inmuebles %}
-            <li class="list-group-item">
-                <h5>{{ inmueble.nombre }}</h5>
-                <div class="d-flex justify-content-between">
-                    <span>${{ inmueble.precio }} por mes</span>
-                    <a href="{% url 'editar_inmueble' id=inmueble.id %}"
-                        class="p-1">
-                        <i class="bi bi-pencil-fill"></i>
-                    </a>
-                    <a
-                        href="#"
-                        class="p-1 text-danger"
-                        onclick="eliminar(event)">
-                        <i class="bi bi-trash-fill" id="{{inmueble.id}}"></i>
-                    </a>
-                </div>
-            </li>
-            {% empty %}
-            <li class="list-group-item">Sin propiedades aún</li>
-            {% endfor %}
-        </ul>
+            </ul>
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -168,17 +93,46 @@
 {% block js %}
 <script>
     function eliminar(event) {
-        // 1. Evitamos que enlace me dirija a otro lado
-        event.preventDefault()
-        // 2. Recuperamos el ID del icono clickeado
-        const id = event.target.id
-        const url = '/inmuebles/eliminar/' + id + '/'
-        // 3. Confirmamos si usuario desea eliminar
-        const confirmacion = confirm('¿estás seguro?')
-        if (confirmacion == true) {
-            // 4. redirijo la página a la URL construída
-            window.location.href = url
+        event.preventDefault();
+        const id = event.target.id;
+        const url = '/inmuebles/eliminar/' + id + '/';
+        const confirmacion = confirm('¿Estás seguro?');
+        if (confirmacion) {
+            window.location.href = url;
         }
     }
 </script>
+{% endblock %}
+
+
+{% block css %}
+<style>
+    .btn-outline-success {
+        width: 100%;
+    }
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        margin-top: 0.5rem;
+    }
+    .list-group-item h5 {
+        margin: 0;
+    }
+    .list-group-item span {
+        font-size: 1rem;
+        color: #555;
+    }
+    .btn-group {
+        display: flex;
+    }
+    .btn-group .btn {
+        margin-left: 5px;
+    }
+    .container {
+        max-width: 1200px;
+        margin-top: 2rem;
+    }
+</style>
 {% endblock %}

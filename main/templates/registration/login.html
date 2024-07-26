@@ -1,20 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    {% if messages %}
-        <div class="container mt-3">
-            {% for message in messages %}
-                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
     <style>
         #form {
-            background-color: rgb(165, 187, 188);
+            background-color: rgb(146, 146, 146);
             color: white;
             padding: 0;
             margin: 0;

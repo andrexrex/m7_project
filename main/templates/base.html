@@ -19,14 +19,8 @@
 <body>
     {% block header %}
     <header>
-        <div class="logo">
-            <img src="{% static 'logo.jpg' %}" alt="logo">
-        </div>
-    </header>
-    {% endblock %}
-
-    {% block navbar %}
         {% include 'parts/navbar.html' %}
+    </header>
     {% endblock %}
 
     {% if messages %}
@@ -39,7 +33,7 @@
     {% endif %}
 
     {% block content %}
-    <main>
+    <main class="container mt-5">
         Este es el main del template base
     </main>
     {% endblock %}
@@ -55,5 +49,4 @@
     {% block js %}
     {% endblock %}
 </body>
-
 </html>

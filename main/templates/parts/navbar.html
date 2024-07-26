@@ -1,14 +1,17 @@
-<nav class="navbar navbar-expand-lg navbar-custom px-5 pe-5" data-bs-theme="dark">
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'home' %}">TokTok</a>
+        <a class="navbar-brand mx-5 mt-1" href="{% url 'home' %}">
+            <img src="{% static 'logo2.png' %}" alt="logo" class="logo-img">
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                    <a class="nav-link" aria-current="page" href="/home">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'profile' %}">Mis Datos</a>
@@ -19,21 +22,25 @@
                 </li>
                 {% endif %}
             </ul>
-            <div class="d-flex align-items-center ms-auto">
-                <form class="d-flex me-3">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-light light" type="submit">Search</button>
-                </form>
+            <div class="d-flex align-items-center">
                 {% if user.is_authenticated %}
-                <span class="d-inline-block m-1 text-light">Sesion de {{ user.first_name }}</span>
+                <span class="d-inline-block m-1 text-light nav-item">Sesion de {{ user.first_name }}</span>
                 <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">LogOut</button>
+                    <button type="submit" class="btn btn-danger nav-item text-light">LogOut</button>
                 </form>
                 {% else %}
-                <a href="{% url 'login' %}" class="btn btn-primary mx-1">LogIn</a>
+                <a href="{% url 'login' %}" class="btn btn-primary mx-1 nav-item">LogIn</a>
+                <a href=# class="btn btn-secondary me-1 nav-item">Register</a>
                 {% endif %}
+                <a href=# class="btn btn-outline-light ms-2 nav-item">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a href=# class="btn btn-outline-light ms-2 nav-item">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
             </div>
         </div>
     </div>
 </nav>
+

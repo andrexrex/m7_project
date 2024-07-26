@@ -4,10 +4,28 @@ from django.db.utils import IntegrityError
 from django.db.models import Q
 from django.db import connection
 
-def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales, n_estacionamientos, n_habitaciones, n_banos, direccion, tipo_inmueble, precio, comuna_cod, propietario_rut):
+def crear_inmueble(nombre, descripcion, m2_construidos, m2_totales, n_estacionamientos, n_habitaciones, n_banos, direccion, tipo_inmueble, precio, comuna_cod, propietario_rut, img1=None, img2=None, img3=None, img4=None):
     comuna = Comuna.objects.get(cod=comuna_cod)
     propietario = User.objects.get(username=propietario_rut)
-    Inmueble.objects.create(nombre=nombre, descripcion=descripcion, m2_construidos=m2_construidos, m2_totales=m2_totales, n_estacionamientos=n_estacionamientos, n_habitaciones=n_habitaciones, n_banos=n_banos, direccion=direccion, tipo_inmueble=tipo_inmueble, precio=precio, comuna=comuna, propietario=propietario)
+    Inmueble.objects.create(
+        nombre=nombre,
+        descripcion=descripcion,
+        m2_construidos=m2_construidos,
+        m2_totales=m2_totales,
+        n_estacionamientos=n_estacionamientos,
+        n_habitaciones=n_habitaciones,
+        n_banos=n_banos,
+        direccion=direccion,
+        tipo_inmueble=tipo_inmueble,
+        precio=precio,
+        comuna=comuna,
+        propietario=propietario,
+        img1=img1,
+        img2=img2,
+        img3=img3,
+        img4=img4
+    )
+
 
 def editar_inmueble(inmueble_id, nombre=None, descripcion=None, m2_construidos=None, m2_totales=None,n_estacionamientos=None, n_habitaciones=None, n_banos=None, direccion=None, tipo_inmueble=None, precio=None,comuna=None):
     try:
@@ -48,18 +66,25 @@ def eliminar_inmueble(inmueble_id):
     except Inmueble.DoesNotExist:
         return False
 
+from django.contrib.auth.models import User
+from django.db import IntegrityError
+from main.models import UserProfile
+
 def crear_user(username, first_name, last_name, email, password, pass_confirm, direccion, telefono=None) -> list[bool, str]:
-    #VALIDAR PASSWORD
+    # 1. Validamos que las password coincidan
     if password != pass_confirm:
         return False, 'Las contraseñas no coinciden'
-    #CREAR USER
+    # 2. creamos el objeto user
     try:
-        user = User.objects.create_user(username,email, password,first_name=first_name, last_name=last_name)
+        user = User.objects.create_user(username, email, password, first_name=first_name, last_name=last_name)
     except IntegrityError:
+        # se le da feedback al usuario
         return False, 'RUT duplicado'
-    #CREAR USERPROFILE
-    UserProfile.objects.create(user=user,direccion=direccion, telefono=telefono)
+    # 3. Creamos el UserProfile
+    UserProfile.objects.create(user=user, direccion=direccion, telefono=telefono)
+    # 4. Si todo sale bien, retornamos True
     return True, None
+
 
 def editar_user(username, first_name, last_name, email, password, pass_confirm, direccion, telefono=None) -> list[bool, str]:
     #EDICION DEL USER
