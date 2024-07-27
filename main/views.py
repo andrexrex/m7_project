@@ -44,11 +44,13 @@ def home(request):
     regiones = Region.objects.all()
     comunas = Comuna.objects.all()
     inmuebles = filtrar_inmuebles(region_cod, comuna_cod, palabra)
+    info = generar_info(region_cod, comuna_cod, palabra)
 
     context = {
         'regiones': regiones,
         'comunas': comunas,
         'inmuebles': inmuebles,
+        'info': info,
     }
     return render(request, 'home.html', context)
 
@@ -63,6 +65,22 @@ def filtrar_inmuebles(region_cod, comuna_cod, palabra):
             Q(nombre__icontains=palabra) | Q(descripcion__icontains=palabra)
         )
     return inmuebles
+
+def generar_info(region_cod, comuna_cod, palabra):
+    info = ""
+    if region_cod:
+        region = Region.objects.get(cod=region_cod)
+        info += f"En Región {region.nombre}"
+    if comuna_cod:
+        comuna = Comuna.objects.get(cod=comuna_cod)
+        if info:
+            info += ", "
+        info += f"{comuna.nombre}"
+    if palabra:
+        if info:
+            info += ", "
+        info += f"con '{palabra}'"
+    return info
 
 @login_required
 def profile(req):

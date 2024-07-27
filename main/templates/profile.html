@@ -3,8 +3,8 @@
 {% block content %}
 <div class="container mt-5">
     <div class="row g-5"> <!-- Add g-4 class here for gutter spacing -->
-        <div class="col-12 col-md-3 mb-4">
-            <h3 class="text-center mb-4">Editar contraseña</h3>
+        <div class="col-12 col-md-3 mb-4 contraseñas">
+            <h3 class="text-start mb-4">Editar contraseña</h3>
             <form action="/accounts/change-pass/" method="post">
                 {% csrf_token %}
                 <div class="mb-3">
@@ -18,7 +18,7 @@
                 <input type="submit" value="Cambiar" class="btn btn-danger w-100">
             </form>
         </div>
-        <div class="col-12 col-md-5 mb-4">
+        <div class="col-12 col-md-5 mb-4 personales">
             <h3 class="text-center mb-4">Editar datos personales</h3>
             <form action="/edit-user/" method="post">
                 {% csrf_token %}
@@ -55,7 +55,7 @@
                 <input type="submit" value="Cambiar" class="btn btn-secondary w-100">
             </form>
         </div>
-        <div class="col-12 col-md-4 mb-4">
+        <div class="col-12 col-md-4 mb-4 propiedades">
             <h3 class="text-center mb-5">
                 {% if user.user_profile.rol == 'arrendador' %}
                 Tus Propiedades
@@ -142,8 +142,24 @@
         margin-left: 5px;
     }
     .container {
-        max-width: 1200px;
+        max-width: 100%;
         margin-top: 2rem;
+    }
+
+    .contraseñas {
+    padding-right: 1rem;
+    margin-left: 8rem;
+    max-width: 300px;
+    }
+
+    .personales {
+    max-width: 400px;
+    margin-left: 7rem;
+    }
+
+    .propiedades {
+    max-width: 400px;
+    margin-left: 5rem;
     }
 </style>
 {% endblock %}

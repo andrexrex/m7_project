@@ -35,13 +35,11 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-
-    <!-- Filters Row -->
     <div class="container mt-5">
-        <div class="row mb-4 justify-content-center">
+        <div class="row mb-4 justify-content-center filtros">
             <div class="col-md-12">
                 <div class="filter-header">
-                    <h3>Filtar propiedades</h3>
+                    <h3>Filtrar propiedades</h3>
                 </div>
                 <form action="{% url 'home' %}" method="get">
                     <div class="row">
@@ -70,7 +68,7 @@
                             <label for="palabra" class="form-label">Palabra</label>
                             <input type="text" class="form-control" name="palabra" id="palabra" />
                         </div>
-                        <!-- Submit Button -->
+                        <!-- Button -->
                         <div class="col-md-3 mb-3 d-flex align-items-end">
                             <input type="submit" value="Buscar" class="btn btn-secondary w-100">
                         </div>
@@ -78,11 +76,13 @@
                 </form>
             </div>
         </div>
-        <!-- Properties Cards Row -->
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <div class="header mb-3 text-center">
                     <h2 class="fs-1">Propiedades</h2>
+                    {% if info %}
+                    <p>{{ info }}</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -139,7 +139,7 @@
 .carousel-item {
     position: relative;
     width: 100%;
-    height: 30rem; /* Adjust height as needed */
+    height: 30rem; 
     overflow: hidden;
 }
 
@@ -168,30 +168,30 @@
     transform: translateX(-50%);
     color: white;
     text-align: center;
-    z-index: 10; /* Ensure captions are above the gradient */
+    z-index: 10; 
 }
 
 .card-img-container {
     position: relative;
     width: 100%;
-    height: 25rem; /* Fixed height for the image */
+    height: 25rem;
     border-radius: 8px;
-    overflow: hidden; /* Ensure no overflow */
+    overflow: hidden;
 }
 
 .card-img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure the image covers the entire area */
-    transition: opacity 0.3s ease; /* Smooth transition for hover effect */
+    object-fit: cover;
+    transition: opacity 0.3s ease; 
 }
 
 .product-card {
-    border: none; /* Remove border */
+    border: none; 
     border-radius: 8px;
-    overflow: hidden; /* Ensure no overflow */
-    position: relative; /* Needed for overlay positioning */
-    height: 25rem; /* Fixed height for the card */
+    overflow: hidden; 
+    position: relative;
+    height: 25rem; 
     display: flex;
     flex-direction: column;
 }
@@ -202,34 +202,38 @@
     left: 0;
     width: 100%;
     padding: 1rem;
-    background: rgba(0, 0, 0, 0.6); /* Semi-transparent background for contrast */
-    color: white !important; /* Ensure text color is white */
+    background: rgba(0, 0, 0, 0.6);
+    color: white !important;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center align content horizontally */
-    text-align: center; /* Center align text */
+    align-items: center;
+    text-align: center; 
 }
 
 .card-body-overlay h5, 
 .card-body-overlay p, 
 .card-body-overlay h4 {
-    color: white !important; /* Force text color to be white */
-    margin: 0; /* Remove default margins */
+    color: white !important; 
+    margin: 0;
 }
 
 .card-body-overlay .btn-primary {
-    color: #fff !important; /* Button text color */
-    background-color: #007bff !important; /* Button background color */
-    border-color: #007bff !important; /* Button border color */
-    margin-top: 1rem; /* Add spacing above the button */
-    width: 100%; /* Make button full width */
-    border-radius: 8px; /* Rounded corners for the button */
+    color: #fff !important; 
+    background-color: #007bff !important; 
+    border-color: #007bff !important; 
+    margin-top: 1rem; 
+    width: 100%; 
+    border-radius: 8px; 
 }
 
 .card-body-overlay .btn-primary:hover {
-    background-color: #0056b3 !important; /* Darker button background on hover */
+    background-color: #0056b3 !important; 
 }
 
+.filtros {
+    background-color: #d3e0ec !important; 
+    padding: 1.5rem;
+}
 </style>
 {% endblock %}
 
