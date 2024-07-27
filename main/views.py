@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth import authenticate, login
@@ -126,4 +126,8 @@ def solo_arrendatarios(request):
 
 def success(request):
     return render(request,'success.html')    
+
+def detalle(request, pk):
+    inmueble = get_object_or_404(Inmueble, pk=pk)
+    return render(request, 'detalle.html', {'inmueble': inmueble})
 

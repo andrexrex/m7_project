@@ -12,7 +12,7 @@ body {
 
 /* NAVBAR */
 .navbar{
-    background-color: #e1e1e1 !important;
+    background-color: #ffffff !important;
     font-family: "Poppins", sans-serif;
     padding-left: 3.5rem;
 }
@@ -24,10 +24,18 @@ body {
 
 .nav-item {
     font-family: "Poppins", sans-serif;
-    color: #555555 !important;
-    font-size: 25px !important; 
+    color: #215f9a !important;
+    font-size: 20px !important; 
     font-weight: bold;
     margin: 0 1rem;
+}
+
+.nav-link {
+    font-family: "Poppins", sans-serif;
+    color: #215f9a !important;
+    font-size: 20px !important; 
+    font-weight: bold;
+    margin: 0 0.8rem;
 }
 
 /* LOGO */
@@ -125,18 +133,18 @@ img{
 }
 
 .btn-secondary {
-    background-color: #5700a3;
-    border-color: #5700a3;
+    background-color: #46b0e0;
+    border-color: #46b0e0;
 }
 
 .btn-secondary:hover {
-    background-color: #ac6be6;
-    border-color: #ac6be6;
+    background-color: #348bb4;
+    border-color: #73c1e5;
 }
 
 .btn-primary {
-    background-color: #4f95da;
-    border-color: #4f95da;
+    background-color: #a6caec;
+    border-color: #a6caec;
 }
 
 .btn-primary:hover {

@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid">
         <a class="navbar-brand mx-5 mt-1" href="{% url 'home' %}">
-            <img src="{% static 'logo2.png' %}" alt="logo" class="logo-img">
+            <img src="{% static 'logo.png' %}" alt="logo" class="logo-img">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,14 +24,14 @@
             </ul>
             <div class="d-flex align-items-center">
                 {% if user.is_authenticated %}
-                <span class="d-inline-block m-1 text-light nav-item">Sesion de {{ user.first_name }}</span>
+                <span class="d-inline-block text-light nav-item">Sesion de {{ user.first_name }}</span>
                 <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger nav-item text-light">LogOut</button>
+                    <button type="submit" class="btn btn-secondary nav-item text-light">LogOut</button>
                 </form>
                 {% else %}
-                <a href="{% url 'login' %}" class="btn btn-primary mx-1 nav-item">LogIn</a>
-                <a href=# class="btn btn-secondary me-1 nav-item">Register</a>
+                <a href="{% url 'login' %}" class="btn btn-primary mx-4 nav-item">LogIn</a>
+                <a href=# class="btn btn-secondary mx-2 nav-item">Register</a>
                 {% endif %}
                 <a href=# class="btn btn-outline-light ms-2 nav-item">
                     <i class="fa-solid fa-envelope"></i>

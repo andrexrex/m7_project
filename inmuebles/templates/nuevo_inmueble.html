@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="text-center mt-4 mb-5">
-            <button type="submit" class="btn btn-success">Crear Propiedad</button>
+            <button type="submit" class="btn btn-secondary">Crear Propiedad</button>
         </div>
     </form>
 </div>
@@ -99,4 +99,12 @@
     }
     $('#region_cod').on('change', filtrar_comunas);
 </script>
+{% endblock %}
+{% block css %}
+    <style>
+        body, html {
+            background-color: #a6caec;
+            color: #215f9a;
+        }
+    </style>
 {% endblock %}

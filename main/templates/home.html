@@ -72,7 +72,7 @@
                         </div>
                         <!-- Submit Button -->
                         <div class="col-md-3 mb-3 d-flex align-items-end">
-                            <input type="submit" value="Buscar" class="btn btn-success w-100">
+                            <input type="submit" value="Buscar" class="btn btn-secondary w-100">
                         </div>
                     </div>
                 </form>
@@ -94,9 +94,9 @@
                         <img class="card-img" src="{{ inmueble.img1 }}" alt="Card image cap" onmouseover="switchImage(this, '{{ inmueble.img2 }}')" onmouseout="switchImage(this, '{{ inmueble.img1 }}')">
                         <div class="card-body-overlay">
                             <h5 class="card-title">{{ inmueble.nombre }}</h5>
-                            <p class="card-text">{{ inmueble.descripcion }}</p>
+                            <p class="card-text">{{ inmueble.descripcion }} en {{ inmueble.comuna.nombre }}</p>
                             <h4 class="product-price">${{ inmueble.precio }}</h4>
-                            <a href="#" class="btn btn-primary">Ver detalle</a>
+                            <a href="{% url 'detalle' inmueble.id %}" class="btn btn-primary">Ver detalle</a>
                         </div>
                     </div>
                 </div>
