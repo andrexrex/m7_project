@@ -21,14 +21,9 @@ class CustomLogoutView(LogoutView):
 
     def dispatch(self, request, *args, **kwargs):
         response = super().dispatch(request, *args, **kwargs)
-        
-        # Clear messages
         storage = messages.get_messages(request)
-        list(storage)  # Consume the generator to clear the messages
-        
-        # Add a single message
+        list(storage)  
         messages.add_message(request, messages.WARNING, "Sesion Cerrada Exitosamente")
-        
         return response
     
 def root(request):
