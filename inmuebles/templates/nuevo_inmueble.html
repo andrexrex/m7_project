@@ -2,18 +2,26 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h3 class="text-center mb-5">Crea una nueva propiedad</h3>
+    <h3 class="text-center mb-4 fs-3">Crear nueva propiedad</h3>
     <form action="/inmuebles/crear/" method="post">
         {% csrf_token %}
         <div class="row g-5">
             <div class="col-md-4">
-                <div class="mb-3">
+                <div class="mb-3 mt-3">
+                    <h4 class="text-center">Propietario</h4>
+                </div>
+                <div class="mb-5">
+                    <h5 class="text-center fs-6">{{ user.first_name }} {{ user.last_name }}</h5>
+                    <h5 class="text-center fs-6">RUT {{ user.username }}</h5> 
+                    <h5 class="text-center fs-6">{{ user.email }}</h5>                        
+                </div>
+                <div class="mb-3 mt-1">
                     <label for="nombre" class="form-label">Nombre:</label>
                     <input type="text" class="form-control" id="nombre" name="nombre" required placeholder="Nombre de la propiedad">
                 </div>
                 <div class="mb-3">
                     <label for="descripcion" class="form-label">Descripción:</label>
-                    <textarea name="descripcion" class="form-control" id="descripcion" rows="3" required maxlength="1500" placeholder="Breve descripción..."></textarea>
+                    <textarea name="descripcion" class="form-control" id="descripcion" rows="1" required maxlength="1500" placeholder="Breve descripción..."></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="m2_construidos" class="form-label">Metros Construídos:</label>
@@ -26,23 +34,21 @@
             </div>
             <div class="col-md-4">
                 <div class="mb-3">
-                    <label for="num_estacionamientos" class="form-label">Num. Estacionamientos:</label>
-                    <input type="number" class="form-control" id="num_estacionamientos" name="num_estacionamientos" min="0" value="0" required placeholder="Número">
+                    <label for="img1" class="form-label">Imagen 1:</label>
+                    <input type="url" class="form-control" id="img1" name="img1" placeholder="URL de la imagen">
                 </div>
                 <div class="mb-3">
-                    <label for="num_habitaciones" class="form-label">Num. Habitaciones:</label>
-                    <input type="number" class="form-control" id="num_habitaciones" name="num_habitaciones" min="0" value="0" required placeholder="Número">
+                    <label for="img2" class="form-label">Imagen 2:</label>
+                    <input type="url" class="form-control" id="img2" name="img2" placeholder="URL de la imagen">
                 </div>
                 <div class="mb-3">
-                    <label for="num_baños" class="form-label">Num. Baños:</label>
-                    <input type="number" class="form-control" id="num_baños" name="num_baños" min="0" value="0" required placeholder="Número">
+                    <label for="img3" class="form-label">Imagen 3:</label>
+                    <input type="url" class="form-control" id="img3" name="img3" placeholder="URL de la imagen">
                 </div>
                 <div class="mb-3">
-                    <label for="direccion" class="form-label">Dirección:</label>
-                    <input type="text" class="form-control" id="direccion" name="direccion" required placeholder="Dirección">
+                    <label for="img4" class="form-label">Imagen 4:</label>
+                    <input type="url" class="form-control" id="img4" name="img4" placeholder="URL de la imagen">
                 </div>
-            </div>
-            <div class="col-md-4">
                 <div class="mb-3">
                     <label for="tipo_inmueble" class="form-label">Tipo de Inmueble:</label>
                     <select class="form-select" id="tipo_inmueble" name="tipo_inmueble" required>
@@ -56,6 +62,8 @@
                     <label for="precio" class="form-label">Precio (CLP):</label>
                     <input type="number" class="form-control" id="precio" name="precio" min="1000" required placeholder="$250.000">
                 </div>
+            </div>
+            <div class="col-md-4">
                 <div class="mb-3">
                     <label for="region_cod" class="form-label">Región:</label>
                     <select class="form-select" id="region_cod" name="region_cod" required>
@@ -74,10 +82,26 @@
                         {% endfor %}
                     </select>
                 </div>
+                <div class="mb-3">
+                    <label for="direccion" class="form-label">Dirección:</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" required placeholder="Dirección">
+                </div>
+                <div class="mb-3">
+                    <label for="num_estacionamientos" class="form-label">Num. Estacionamientos:</label>
+                    <input type="number" class="form-control" id="num_estacionamientos" name="num_estacionamientos" min="0" value="0" required placeholder="Número">
+                </div>
+                <div class="mb-3">
+                    <label for="num_habitaciones" class="form-label">Num. Habitaciones:</label>
+                    <input type="number" class="form-control" id="num_habitaciones" name="num_habitaciones" min="0" value="0" required placeholder="Número">
+                </div>
+                <div class="mb-3">
+                    <label for="num_baños" class="form-label">Num. Baños:</label>
+                    <input type="number" class="form-control" id="num_baños" name="num_baños" min="0" value="0" required placeholder="Número">
+                </div>
             </div>
         </div>
         <div class="text-center mt-4 mb-5">
-            <button type="submit" class="btn btn-secondary">Crear Propiedad</button>
+            <button type="submit" class="btn btn-secondary fs-5">Crear Inmueble</button>
         </div>
     </form>
 </div>

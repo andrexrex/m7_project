@@ -38,13 +38,15 @@ def editar_inmueble(req, id):
 @user_passes_test(solo_arrendadores)
 def nuevo_inmueble(req):
     # nos traemos la información de las comunas y las regiones
+    user = req.user
     regiones = Region.objects.all()
     comunas = Comuna.objects.all()
     # pasar los datos requeridos por el formulario
     context = {
         'tipos_inmueble': Inmueble.tipos,
         'regiones': regiones,
-        'comunas': comunas
+        'comunas': comunas,
+        'user': user
     }
     return render(req, 'nuevo_inmueble.html', context)
 
@@ -65,7 +67,11 @@ def crear_inmueble(req):
         req.POST['tipo_inmueble'],
         int(req.POST['precio']),
         req.POST['comuna_cod'],
-        propietario_rut
+        propietario_rut,
+        req.POST['img1'],
+        req.POST['img2'],
+        req.POST['img3'],
+        req.POST['img4']
     )
     messages.success(req, 'Propiedad Creada')
     return redirect('/accounts/profile/')
